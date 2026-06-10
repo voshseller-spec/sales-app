@@ -1,14 +1,30 @@
 {
-  "name": "sales-trainer",
+  "name": "closer",
   "version": "0.1.0",
-  "description": "A sales-training game where you pitch a product to a skeptical AI buyer.",
-  "type": "module",
+  "private": true,
   "scripts": {
-    "start": "node server.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.69.0",
-    "dotenv": "^17.4.2",
-    "express": "^4.21.2"
+    "clsx": "2.1.1",
+    "framer-motion": "11.3.19",
+    "lucide-react": "0.424.0",
+    "next": "^14.2.35",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "tailwind-merge": "2.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.10",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "autoprefixer": "10.4.19",
+    "postcss": "8.4.39",
+    "tailwindcss": "3.4.7",
+    "typescript": "5.5.3"
   }
 }

@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: 255 255 255;
+    --surface: 247 249 252;
+    --elevated: 255 255 255;
+    --border: 226 232 240;
+    --ink: 10 37 64;
+    --muted: 71 84 103;
+    --subtle: 132 145 165;
+
+    --primary: 99 91 255;
+    --primary-fg: 255 255 255;
+    --primary-soft: 238 236 255;
+
+    --accent: 0 196 140;
+    --accent-soft: 219 247 236;
+
+    --danger: 226 89 80;
+    --danger-soft: 253 232 230;
+
+    --warning: 234 162 47;
+  }
+
+  .dark {
+    --bg: 9 12 22;
+    --surface: 14 18 30;
+    --elevated: 18 23 38;
+    --border: 30 38 58;
+    --ink: 232 237 247;
+    --muted: 154 165 188;
+    --subtle: 116 127 150;
+
+    --primary: 130 124 255;
+    --primary-fg: 255 255 255;
+    --primary-soft: 32 30 68;
+
+    --accent: 52 220 168;
+    --accent-soft: 16 50 42;
+
+    --danger: 244 122 113;
+    --danger-soft: 60 26 26;
+
+    --warning: 244 184 78;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-bg text-ink font-sans;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  ::selection {
+    background: rgb(var(--primary) / 0.2);
+  }
+}
+
+@layer utilities {
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgb(var(--border) / 0.5) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--border) / 0.5) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, black 40%, transparent 80%);
+  }
+  .text-gradient {
+    background: linear-gradient(135deg, rgb(var(--ink)) 0%, rgb(var(--primary)) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hairline {
+    box-shadow: inset 0 0 0 1px rgb(var(--border));
+  }
+}
