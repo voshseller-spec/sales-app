@@ -1,0 +1,12 @@
+{
+  "name": "TrendForge UGC",
+  "short_name": "TrendForge",
+  "description": "Ride the trend before it peaks. AI UGC video ads powered by real-time trend intelligence.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0306",
+  "theme_color": "#12060c",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

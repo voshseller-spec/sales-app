@@ -1,14 +1,32 @@
 {
-  "name": "sales-trainer",
+  "name": "trendforge-ugc",
   "version": "0.1.0",
-  "description": "A sales-training game where you pitch a product to a skeptical AI buyer.",
+  "description": "TrendForge UGC — AI UGC video ad platform with a real-time Viral Trend Intelligence engine. Ride the trend before it peaks.",
   "type": "module",
   "scripts": {
-    "start": "node server.js"
+    "dev": "node scripts/dev.js",
+    "dev:api": "node server/index.js",
+    "dev:web": "vite",
+    "build": "tsc --noEmit -p tsconfig.json && vite build",
+    "start": "NODE_ENV=production node server/index.js",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.69.0",
     "dotenv": "^17.4.2",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.0",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.3.5"
   }
 }
