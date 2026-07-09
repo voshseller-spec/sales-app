@@ -1,4 +1,5 @@
 import { NavLink, Navigate, Route, Routes } from "react-router-dom";
+import iconUrl from "./assets/icon.svg";
 import CreatePage from "./pages/CreatePage";
 import TrendsPage from "./pages/TrendsPage";
 import GalleryPage from "./pages/GalleryPage";
@@ -37,7 +38,7 @@ export default function App() {
       {/* Desktop sidebar */}
       <aside className="sticky top-0 hidden h-dvh w-56 shrink-0 flex-col gap-1 border-r border-white/5 p-4 md:flex">
         <div className="mb-6 flex items-center gap-2.5 px-2 pt-2">
-          <img src="/icon.svg" alt="" className="h-9 w-9 rounded-xl" />
+          <img src={iconUrl} alt="" className="h-9 w-9 rounded-xl" />
           <div>
             <div className="text-sm font-bold text-white">TrendForge UGC</div>
             <div className="text-[10px] text-mist-500">Ride the trend before it peaks</div>
@@ -54,7 +55,7 @@ export default function App() {
       {/* Main content */}
       <main className="min-w-0 flex-1 px-4 pb-24 pt-6 md:px-8 md:pb-10">
         <div className="mb-4 flex items-center gap-2 md:hidden">
-          <img src="/icon.svg" alt="" className="h-8 w-8 rounded-lg" />
+          <img src={iconUrl} alt="" className="h-8 w-8 rounded-lg" />
           <span className="text-sm font-bold text-white">TrendForge UGC</span>
         </div>
         <Routes>
