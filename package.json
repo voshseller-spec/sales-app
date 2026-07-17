@@ -1,14 +1,26 @@
 {
-  "name": "sales-trainer",
+  "name": "upstate",
   "version": "0.1.0",
-  "description": "A sales-training game where you pitch a product to a skeptical AI buyer.",
-  "type": "module",
+  "private": true,
   "scripts": {
-    "start": "node server.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.69.0",
-    "dotenv": "^17.4.2",
-    "express": "^4.21.2"
+    "next": "16.2.10",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.10",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }

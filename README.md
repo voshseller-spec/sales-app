@@ -38,16 +38,19 @@ provider`).
 
 ## Deploy to Vercel
 
-This app lives in the `upstate/` subdirectory of the repo, so set the Root
-Directory:
+This app lives at the repository root, so no Root Directory override is needed.
 
 1. [vercel.com/new](https://vercel.com/new) → Import the GitHub repo.
-2. **Root Directory** → `upstate` (Edit → select the folder).
-3. Framework preset auto-detects Next.js. No env vars needed.
+2. Framework preset auto-detects Next.js. Leave Root Directory as `./`.
+3. No env vars needed.
 4. Deploy.
 
-Or with the CLI: `cd upstate && npx vercel` (accept defaults), then
-`npx vercel --prod`.
+Or with the CLI: `npx vercel` (accept defaults), then `npx vercel --prod`.
+
+> Note: an existing Vercel project (`sales-app`) still has its Root Directory
+> set to `upstate` from the previous layout. If you deploy this repo through
+> that project, clear that setting (Root Directory → `./`) so it builds from
+> the root.
 
 ## Analytics
 
