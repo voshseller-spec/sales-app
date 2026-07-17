@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Palette — derived from the physical label */
+  --color-ink: #0a0a0b;
+  --color-carbon: #141416;
+  --color-graphite: #1f1f23;
+  --color-steel: #9ba0a6;
+  --color-bolt: #e8e9eb;
+
+  /* Type — wired to next/font variables set in layout.tsx */
+  --font-display: var(--font-archivo), "Arial Black", sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), "SFMono-Regular", Menlo, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-ink);
+  color: var(--color-steel);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Matte-material grain: SVG turbulence at ~3% opacity over everything. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------------------------------------------------------------------------
+ * Chrome: the signature metallic text treatment.
+ * A multi-stop silver gradient clipped to the glyphs. Used ONLY on the hero
+ * wordmark and section headings.
+ * ------------------------------------------------------------------------- */
+.text-chrome {
+  background-image: linear-gradient(
+    115deg,
+    #8a8a8f 0%,
+    #c8c8cd 18%,
+    #f2f2f4 30%,
+    #9a9aa0 44%,
+    #4a4a50 58%,
+    #6f6f76 72%,
+    #b9b9bf 86%,
+    #8a8a8f 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* The hero-only moving light sweep: a narrow white highlight layered above
+ * the metallic base, both clipped to the text. Only background-position
+ * animates (compositor-cheap, no layout shift). One pass every ~8s. */
+.chrome-sheen {
+  background-image: linear-gradient(
+      100deg,
+      transparent 0%,
+      transparent 38%,
+      rgba(255, 255, 255, 0.85) 50%,
+      transparent 62%,
+      transparent 100%
+    ),
+    linear-gradient(
+      115deg,
+      #8a8a8f 0%,
+      #c8c8cd 18%,
+      #f2f2f4 30%,
+      #9a9aa0 44%,
+      #4a4a50 58%,
+      #6f6f76 72%,
+      #b9b9bf 86%,
+      #8a8a8f 100%
+    );
+  background-size: 250% 100%, 100% 100%;
+  background-repeat: no-repeat;
+  background-position: 130% 0, 0 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: chrome-sweep 8s ease-in-out infinite;
+}
+
+@keyframes chrome-sweep {
+  0% {
+    background-position: 130% 0, 0 0;
+  }
+  28% {
+    background-position: -60% 0, 0 0;
+  }
+  100% {
+    background-position: -60% 0, 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .chrome-sheen {
+    animation: none;
+    /* Freeze with the highlight parked off the glyphs. */
+    background-position: 130% 0, 0 0;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Fade-up reveal — the only scroll animation on the site.
+ * ------------------------------------------------------------------------- */
+.fade-up {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.fade-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Visible keyboard focus everywhere. */
+:focus-visible {
+  outline: 2px solid var(--color-bolt);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Reflective floor shadow under the product image slot. */
+.floor-shadow {
+  background: radial-gradient(
+    ellipse 50% 100% at 50% 0%,
+    rgba(232, 233, 235, 0.16),
+    rgba(232, 233, 235, 0.05) 45%,
+    transparent 70%
+  );
+}
