@@ -20,11 +20,6 @@ export const content = {
     capsulesPerBottle: 100,
     priceNZD: 35,
     currency: "NZD",
-    // Tall portrait product shot rendered in the hero slot. Set to null to
-    // fall back to the styled empty placeholder.
-    imageSrc: "/product-outdoor.webp" as string | null,
-    imageAlt:
-      "A hand holding the matte black Upstate tin against a mountain valley, 100mg caffeine per capsule",
   },
 
   hero: {
@@ -32,6 +27,13 @@ export const content = {
       "One capsule. 100mg of caffeine. Nothing else worth mentioning.",
     primaryCta: "Buy",
     secondaryCta: "See what's inside ↓",
+    // Full-bleed hero background. 16:9; the tin sits centre-low in frame, so
+    // hero copy is pinned to the top and must never run over it.
+    // public/product-outdoor.webp is the other product shot — currently unused
+    // but kept for a future section.
+    imageSrc: "/hero.png",
+    imageAlt:
+      "The matte black Upstate tin on a dark desk beside a laptop, notebook and mug — 100 caps, 100mg caffeine per capsule",
   },
 
   // Rendered as the horizontal mono spec strip, in order.
