@@ -43,9 +43,11 @@ Rules:
 Three families, each with one job. Wired through `next/font` in
 `app/layout.tsx` — don't add a fourth font.
 
-- **`font-display`** — Archivo Black, weight 400 only. Headlines. Always
-  `uppercase`. Always tight tracking. Always paired with `.text-chrome` (or
-  `.chrome-sheen` on the hero wordmark only).
+- **`font-display`** — Archivo Black, weight 400 only. Headlines and big
+  figures. Always `uppercase`, always tight tracking. Pair with `.text-chrome`
+  (or `.chrome-sheen`, hero wordmark only) — except where a display-sized
+  figure is deliberately secondary, which takes flat `text-steel/60` instead
+  so the chrome one stays dominant (see `ValueMath`).
 - **`font-body`** — Inter. Paragraphs and long-form. The only thing set in
   sentence case.
 - **`font-mono`** — JetBrains Mono. Eyebrows, spec strips, button labels,
@@ -62,10 +64,18 @@ generic.
 | Hero wordmark | `text-[clamp(3.4rem,14vw,11rem)]` `leading-[0.9]` | `tracking-[-0.02em]` |
 | Section heading `h2` | `text-3xl sm:text-4xl md:text-5xl` `leading-tight` | `tracking-tight` |
 | Hero tagline | `text-sm sm:text-base` | `tracking-[0.55em] sm:tracking-[0.7em]` |
-| Eyebrow | `text-[11px]` | `tracking-[0.3em]` |
+| Eyebrow (`SectionHeading`) | `text-[11px]` | `tracking-[0.3em]` |
+| Other 11px mono labels | `text-[11px]` | `tracking-[0.22em]`–`tracking-[0.25em]` |
 | Kicker / spec | `text-xs` | `tracking-[0.3em]` |
 | Button label | `text-sm` | `tracking-[0.2em]` |
-| Micro / caption | `text-[10px]` | `tracking-[0.15em]` |
+| Micro / caption | `text-[10px]` | `tracking-[0.15em]`–`tracking-[0.2em]` |
+| Long mono disclaimer | `text-[11px]` | `tracking-[0.12em]` |
+
+At 11px the exact value tracks density, not a single constant: `0.3em` for a
+lone eyebrow, `0.22em`–`0.25em` where labels sit in a row or a grid,
+`0.12em` for a full sentence set in mono. Wider tracking needs more room; when
+the text is long or the column is narrow, tighten it. Match the nearest
+existing example rather than forcing one number.
 
 Body copy is the exception: `text-base leading-relaxed text-steel`, normal
 tracking, sentence case.
@@ -130,9 +140,29 @@ numbers below are the law, whether you implement them in CSS or Framer Motion:
 - **Chrome sweep:** hero wordmark only, 8s loop, `background-position` only.
   Never animate a second element on a loop.
 - **`prefers-reduced-motion`:** every animation must have a reduced-motion
-  path that renders the final state with no transition. This is already
-  handled for the CSS classes; Framer Motion work must add it explicitly
-  via `useReducedMotion()`.
+  path that renders the final state with no transition.
+
+### The reduced-motion trap — verified, do not skip
+
+Any Framer Motion element that reveals on scroll **must carry the
+`data-reveal` attribute**, which `globals.css` uses to force
+`opacity:1; transform:none !important` under `prefers-reduced-motion: reduce`.
+
+`useReducedMotion()` alone is not enough, and the failure is silent. A
+`motion.div` server-renders its hidden state as an *inline*
+`style="opacity:0;transform:translateY(16px)"` — that's what stops the page
+flashing before hydration. When the client then renders a plain `<div>`
+instead, React has no `style` prop to reconcile and **leaves the inline style
+on the node**. The section stays invisible, with no hydration warning. Only an
+`!important` stylesheet rule outranks an inline style, which is why the CSS
+net exists.
+
+Verified in Chromium at 1280px and 360px, with and without JS. Test any new
+reveal the same way — reduced-motion is not something to eyeball.
+
+Known and accepted: with JS disabled *and* reduced motion off, revealed
+sections stay hidden. That predates Framer Motion — the CSS `.fade-up` behaves
+identically — and it affects the whole page, not just the migrated section.
 
 Animate `transform` and `opacity` only — they're compositor-cheap. Animating
 layout properties would break the CLS 0 the page currently holds.
@@ -146,8 +176,10 @@ must match the numbers above so the two are indistinguishable.
 - Focus ring is global: `2px solid bolt`, `3px` offset. Never remove it.
 - Decorative glyphs (including ⚡) get `aria-hidden="true"`.
 - Image slots that convey meaning get `role="img"` + `aria-label`.
-- Body text is `steel on ink` — passes AA. Don't drop text below `steel`
-  opacity `/80`, which is the floor already in use.
+- Contrast floors on `carbon`, measured: `steel` = 6.9:1, `steel/80` = 4.9:1,
+  `steel/60` = 3.3:1. So **`/80` is the floor for body-sized text** (AA needs
+  4.5:1), and `/60` is permitted *only* on large display type — 24px+, or
+  18.7px+ bold — where AA needs just 3:1. Never put `/60` on a paragraph.
 - Every interactive element must be a real `<button>` or `<a>`.
 
 ## Avoid the generic AI aesthetic
@@ -156,6 +188,9 @@ These are the tells. None of them belong here:
 
 - Purple/blue/indigo gradient hero backgrounds or gradient CTA buttons.
 - `rounded-2xl` glassmorphism cards with `backdrop-blur` and a soft shadow.
+  Blur is not banned outright — it is correct on the sticky `Nav`
+  (`bg-ink/85 backdrop-blur-md` once scrolled) and on the `CheckoutModal`
+  scrim. It is banned on *cards and panels*, which use hairline borders.
 - Emoji as feature icons. The only glyph in this system is ⚡, already
   established, used sparingly.
 - Three feature cards in a row, each with a circular icon badge above a bold

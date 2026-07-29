@@ -44,13 +44,27 @@ type Props = {
   className?: string;
 };
 
+/**
+ * Every element below carries `data-reveal`, which globals.css uses to force
+ * the final state under `prefers-reduced-motion: reduce`. That CSS rule is not
+ * optional decoration — these components server-render their hidden state as
+ * an inline style, and an inline style survives React hydration even when the
+ * client render drops it. Without the attribute the content never appears.
+ */
+
 /** Single element, revealed on first scroll into view. */
 export function Reveal({ children, className }: Props) {
   const reduced = useReducedMotion();
-  if (reduced) return <div className={className}>{children}</div>;
+  if (reduced)
+    return (
+      <div data-reveal className={className}>
+        {children}
+      </div>
+    );
 
   return (
     <motion.div
+      data-reveal
       className={className}
       variants={item}
       initial="hidden"
@@ -65,10 +79,16 @@ export function Reveal({ children, className }: Props) {
 /** Wrapper that cascades its <RevealItem> children. */
 export function RevealGroup({ children, className }: Props) {
   const reduced = useReducedMotion();
-  if (reduced) return <div className={className}>{children}</div>;
+  if (reduced)
+    return (
+      <div data-reveal className={className}>
+        {children}
+      </div>
+    );
 
   return (
     <motion.div
+      data-reveal
       className={className}
       variants={group}
       initial="hidden"
@@ -87,10 +107,15 @@ export function RevealGroup({ children, className }: Props) {
  */
 export function RevealItem({ children, className }: Props) {
   const reduced = useReducedMotion();
-  if (reduced) return <div className={className}>{children}</div>;
+  if (reduced)
+    return (
+      <div data-reveal className={className}>
+        {children}
+      </div>
+    );
 
   return (
-    <motion.div className={className} variants={item}>
+    <motion.div data-reveal className={className} variants={item}>
       {children}
     </motion.div>
   );

@@ -92,6 +92,11 @@ export const content = {
   valueMath: {
     eyebrow: "THE MATH",
     heading: "Cost per 100mg of caffeine",
+    // Column label for the Upstate figure, and the shared unit caption under
+    // every column. Both were hardcoded in ValueMath.tsx; moved here so all
+    // copy lives in one file. Strings are unchanged.
+    upstateLabel: "Upstate capsule",
+    unitLabel: "per ~100mg caffeine",
     // PLACEHOLDER: sanity-check comparison prices for your market
     comparisons: [
       { label: "Café coffee", priceNZD: 5.5 },

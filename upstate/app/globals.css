@@ -137,6 +137,26 @@ body::after {
   }
 }
 
+/* ---------------------------------------------------------------------------
+ * Framer Motion reveals (components/Reveal.tsx) — reduced-motion safety net.
+ *
+ * Those components server-render their hidden state as an inline
+ * `style="opacity:0;transform:translateY(16px)"`, which is what stops the
+ * page flashing visible before hydration. Inline styles outrank stylesheet
+ * rules, and React will not strip a server-rendered style the client render
+ * no longer specifies — so without this the content stays invisible forever
+ * for reduced-motion users, and for anyone whose JS fails to load.
+ *
+ * !important is load-bearing here: it is the only thing that beats the inline
+ * style. Scoped to the media query, so it never touches the normal path.
+ * ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 /* Visible keyboard focus everywhere. */
 :focus-visible {
   outline: 2px solid var(--color-bolt);

@@ -28,8 +28,18 @@ It does **not** have — and most 21st.dev / shadcn components assume some of �
 `shadcn/ui`, `@radix-ui/*`, `lucide-react`, `clsx`, `class-variance-authority`,
 `tailwind-merge`, or a `cn()` helper.
 
-When a pasted component imports any of those, you have two options. Default to
-the second:
+Two shims already exist so the most common imports resolve without installing
+anything:
+
+- **`@/lib/cn`** — the `cn()` most components import from `@/lib/utils`. Just
+  repoint the import. Read its header first: it joins classes but does **not**
+  resolve conflicting Tailwind utilities the way `tailwind-merge` does.
+- **`@/components/Section`** — the page's two section shells (`surface="ink"`
+  and `surface="carbon"`), so a dropped-in section inherits the container
+  width, gutters and vertical rhythm instead of inventing its own.
+
+When a pasted component imports anything else from that list, you have two
+options. Default to the second:
 
 - **Rewrite without them.** Usually easy: `cn()` becomes a template literal
   (that's what `BuyButton` already does), `cva` variants become a plain
