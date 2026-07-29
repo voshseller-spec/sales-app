@@ -8,7 +8,7 @@ export default function SupplementFacts() {
   return (
     <section className="mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
       <FadeUp>
-        <SectionHeading eyebrow={facts.eyebrow} heading="What's in the bottle" />
+        <SectionHeading eyebrow={facts.eyebrow} heading={facts.heading} />
       </FadeUp>
       <FadeUp>
         <div className="mx-auto max-w-xl border border-graphite bg-carbon p-6 font-mono sm:p-10">

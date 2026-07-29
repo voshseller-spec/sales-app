@@ -14,15 +14,17 @@ export const content = {
   product: {
     name: "Upstate Caffeine",
     caffeineMgPerCapsule: 100,
-    capsulesPerBottle: 500,
-    // PLACEHOLDER: set the real retail price (NZD)
-    priceNZD: 59,
+    // Confirmed by Upstate 2026-07-29. NOTE: the current tin artwork in both
+    // product photos reads "500 CAPSULES" — the artwork is wrong and is due to
+    // be reshot. Don't ship to a real audience until the photos match.
+    capsulesPerBottle: 100,
+    priceNZD: 35,
     currency: "NZD",
-    // PLACEHOLDER: drop a tall portrait bottle render into /public and set the
-    // path here (e.g. "/bottle.png"). null renders a styled empty slot.
-    imageSrc: null as string | null,
+    // Tall portrait product shot rendered in the hero slot. Set to null to
+    // fall back to the styled empty placeholder.
+    imageSrc: "/product-outdoor.webp" as string | null,
     imageAlt:
-      "Matte black Upstate bottle with embossed black-on-black wordmark, 500 capsules, 100mg caffeine per capsule",
+      "A hand holding the matte black Upstate tin against a mountain valley, 100mg caffeine per capsule",
   },
 
   hero: {
@@ -35,7 +37,8 @@ export const content = {
   // Rendered as the horizontal mono spec strip, in order.
   specStrip: [
     "100MG CAFFEINE / CAPSULE",
-    "500 CAPSULES",
+    "100 CAPSULES",
+    "FREE NZ-WIDE SHIPPING",
     "ZERO SUGAR",
     "ZERO CRASH-FILLERS", // VERIFY CLAIM: confirm formulation contains no other stimulants/fillers before shipping this line
     "MADE FOR DAILY USE", // VERIFY CLAIM: confirm daily-use positioning is acceptable under NZ supplement rules
@@ -55,15 +58,21 @@ export const content = {
       },
       {
         title: "Cents, not dollars",
-        body: "One bottle holds 500 servings. That works out to a fraction of the price of a café coffee or a can — the same caffeine at roughly a hundredth of the shelf space.",
+        // REWRITE (Upstate): count corrected to 100 and the "roughly a
+        // hundredth of the shelf space" claim dropped — at 100 capsules for
+        // $35 that multiplier is no longer true. Replace with your wording.
+        body: "One tin holds 100 servings. That works out to a fraction of the price of a café coffee or a can — and a fraction of the shelf space.",
       },
     ],
   },
 
   supplementFacts: {
     eyebrow: "SUPPLEMENT FACTS",
+    // Was hardcoded in SupplementFacts.tsx as "What's in the bottle"; moved
+    // here and corrected — the product is a tin, not a bottle.
+    heading: "What's in the tin",
     servingSize: "1 capsule",
-    servingsPerContainer: 500,
+    servingsPerContainer: 100,
     rows: [
       {
         label: "Caffeine (anhydrous)", // CONFIRM WITH LABEL: caffeine form
@@ -102,7 +111,7 @@ export const content = {
       { label: "Café coffee", priceNZD: 5.5 },
       { label: "Energy drink", priceNZD: 4.5 },
     ],
-    note: "Upstate per-serving price is the bottle price divided by 500 capsules. Comparison prices are typical NZ retail; your café may disagree.",
+    note: "Upstate per-serving price is the tin price divided by 100 capsules. Comparison prices are typical NZ retail; your café may disagree.",
   },
 
   faq: {
@@ -123,11 +132,12 @@ export const content = {
       },
       {
         q: "Do you ship across New Zealand?",
-        a: "Yes — NZ-wide shipping on every order. One bottle is 500 servings, so shipping is something you'll deal with about twice a year.",
+        // REWRITE (Upstate): reorder frequency recalculated for 100 capsules.
+        a: "Yes — free NZ-wide shipping on every order. One tin is 100 servings, so on daily use that's a reorder every few months.",
       },
       {
         q: "What's your returns policy?",
-        a: "Unopened bottles can be returned within 30 days for a full refund. Email us and we'll sort it out without a form or a fight.", // VERIFY CLAIM: confirm the actual returns window and terms
+        a: "Unopened tins can be returned within 30 days for a full refund. Email us and we'll sort it out without a form or a fight.", // VERIFY CLAIM: confirm the actual returns window and terms
       },
       {
         q: "Is this safe to take every day?",
@@ -138,7 +148,10 @@ export const content = {
 
   finalCta: {
     heading: "Energy anywhere",
-    subline: "500 capsules. One decision, twice a year.",
+    // REWRITE (Upstate): the old line ("One decision, twice a year") assumed
+    // 500 capsules. Swapped for the shipping offer — replace if you'd rather
+    // it said something else.
+    subline: "100 capsules. Free shipping, NZ-wide.",
     button: "Buy",
   },
 
@@ -149,7 +162,7 @@ export const content = {
   },
 } as const;
 
-/** Bottle price divided by capsule count, e.g. "$0.12". */
+/** Tin price divided by capsule count, e.g. "$0.35". */
 export function perServingNZD(): number {
   return content.product.priceNZD / content.product.capsulesPerBottle;
 }
