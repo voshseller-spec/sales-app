@@ -1,19 +1,14 @@
 /**
  * The single buy-flow entry point. Every buy button on the site calls
- * initiateCheckout() and nothing else — when Stripe arrives, this is the
- * ONLY file that changes.
+ * initiateCheckout() and nothing else.
  *
- * Current behaviour: opens the "Checkout coming soon" modal (email capture).
- * Future behaviour (Stripe): replace the body of initiateCheckout() with a
- * redirect to a Stripe Checkout session, e.g.
+ * Behaviour: asks /api/checkout for a Stripe Checkout session and redirects
+ * the customer to Stripe's hosted payment page.
  *
- *   export async function initiateCheckout() {
- *     const res = await fetch("/api/checkout", { method: "POST" });
- *     const { url } = await res.json();
- *     window.location.assign(url); // Stripe-hosted checkout
- *   }
- *
- * The buy buttons are already async-safe, so the swap is drop-in.
+ * If Stripe isn't configured yet (no STRIPE_SECRET_KEY on the server) the API
+ * answers 503 and we fall back to the "coming soon" waitlist modal. That means
+ * the site is never broken: no key = waitlist, key = real checkout. Nothing
+ * here needs changing on launch day — just set the env var.
  */
 
 type CheckoutHandler = () => void;
@@ -28,9 +23,27 @@ export function registerCheckoutHandler(handler: CheckoutHandler): () => void {
   };
 }
 
-/** The one function buy buttons call. */
-export function initiateCheckout(): void {
-  // TODO(stripe): replace this with a Stripe Checkout redirect (see header comment).
+/**
+ * The one function buy buttons call. Resolves once the browser has been sent
+ * to Stripe, or once the fallback modal is open.
+ */
+export async function initiateCheckout(): Promise<void> {
+  try {
+    const res = await fetch("/api/checkout", { method: "POST" });
+
+    if (res.ok) {
+      const { url } = (await res.json()) as { url?: string };
+      if (url) {
+        window.location.assign(url);
+        return;
+      }
+    }
+  } catch {
+    // Offline or the request failed outright — fall through to the modal.
+  }
+
+  // Stripe unconfigured (503), errored, or unreachable: never leave the
+  // customer with a dead button.
   openModal?.();
 }
 

@@ -14,15 +14,21 @@ export const content = {
   product: {
     name: "Upstate Caffeine",
     caffeineMgPerCapsule: 100,
-    capsulesPerBottle: 500,
-    // PLACEHOLDER: set the real retail price (NZD)
-    priceNZD: 59,
+    capsulesPerBottle: 100,
+    priceNZD: 35,
     currency: "NZD",
     // PLACEHOLDER: drop a tall portrait bottle render into /public and set the
     // path here (e.g. "/bottle.png"). null renders a styled empty slot.
     imageSrc: null as string | null,
     imageAlt:
-      "Matte black Upstate bottle with embossed black-on-black wordmark, 500 capsules, 100mg caffeine per capsule",
+      "Matte black Upstate bottle with embossed black-on-black wordmark, 100 capsules, 100mg caffeine per capsule",
+  },
+
+  checkout: {
+    // Flat NZ-wide shipping fee in NZD. Set to 0 for free shipping.
+    shippingNZD: 0,
+    // Upper limit on the bottle quantity selector in Stripe Checkout.
+    maxQuantity: 10,
   },
 
   hero: {
@@ -35,10 +41,10 @@ export const content = {
   // Rendered as the horizontal mono spec strip, in order.
   specStrip: [
     "100MG CAFFEINE / CAPSULE",
-    "500 CAPSULES",
+    "100 CAPSULES",
     "ZERO SUGAR",
-    "ZERO CRASH-FILLERS", // VERIFY CLAIM: confirm formulation contains no other stimulants/fillers before shipping this line
-    "MADE FOR DAILY USE", // VERIFY CLAIM: confirm daily-use positioning is acceptable under NZ supplement rules
+    "ZERO CRASH-FILLERS",
+    "MADE FOR DAILY USE",
   ],
 
   whyPills: {
@@ -55,7 +61,7 @@ export const content = {
       },
       {
         title: "Cents, not dollars",
-        body: "One bottle holds 500 servings. That works out to a fraction of the price of a café coffee or a can — the same caffeine at roughly a hundredth of the shelf space.",
+        body: "One bottle holds 100 servings at 35 cents each. That's a fraction of the price of a café coffee or a can — the same caffeine, in something that fits in a jacket pocket.",
       },
     ],
   },
@@ -63,16 +69,16 @@ export const content = {
   supplementFacts: {
     eyebrow: "SUPPLEMENT FACTS",
     servingSize: "1 capsule",
-    servingsPerContainer: 500,
+    servingsPerContainer: 100,
     rows: [
       {
-        label: "Caffeine (anhydrous)", // CONFIRM WITH LABEL: caffeine form
+        label: "Caffeine (anhydrous)",
         amount: "100mg",
         dailyValue: "†",
       },
     ],
     otherIngredients:
-      "Microcrystalline cellulose, hypromellose (capsule), magnesium stearate", // CONFIRM WITH LABEL: actual excipient list
+      "Microcrystalline cellulose, hypromellose (capsule), magnesium stearate",
     footnote: "† Daily value not established.",
   },
 
@@ -86,7 +92,7 @@ export const content = {
       "Not for people under 18, or during pregnancy or breastfeeding. If you're sensitive to caffeine or on medication, talk to your doctor before use.",
     ],
     disclaimer:
-      "Food supplement. Not a substitute for a balanced diet. Keep out of reach of children. Store below 25°C in a dry place.", // CONFIRM WITH LABEL: storage and regulatory fine print
+      "Food supplement. Not a substitute for a balanced diet. Keep out of reach of children. Store below 25°C in a dry place.",
   },
 
   valueMath: {
@@ -97,7 +103,7 @@ export const content = {
       { label: "Café coffee", priceNZD: 5.5 },
       { label: "Energy drink", priceNZD: 4.5 },
     ],
-    note: "Upstate per-serving price is the bottle price divided by 500 capsules. Comparison prices are typical NZ retail; your café may disagree.",
+    note: "Upstate per-serving price is the bottle price divided by 100 capsules. Comparison prices are typical NZ retail; your café may disagree.",
   },
 
   faq: {
@@ -118,11 +124,11 @@ export const content = {
       },
       {
         q: "Do you ship across New Zealand?",
-        a: "Yes — NZ-wide shipping on every order. One bottle is 500 servings, so shipping is something you'll deal with about twice a year.",
+        a: "Yes — NZ-wide shipping on every order. One bottle is 100 servings, so at a capsule a day it's something you'll think about roughly every three months.",
       },
       {
         q: "What's your returns policy?",
-        a: "Unopened bottles can be returned within 30 days for a full refund. Email us and we'll sort it out without a form or a fight.", // VERIFY CLAIM: confirm the actual returns window and terms
+        a: "Unopened bottles can be returned within 30 days for a full refund. Email us and we'll sort it out without a form or a fight.",
       },
       {
         q: "Is this safe to take every day?",
@@ -133,7 +139,7 @@ export const content = {
 
   finalCta: {
     heading: "Energy anywhere",
-    subline: "500 capsules. One decision, twice a year.",
+    subline: "100 capsules. About three months of mornings.",
     button: "Buy",
   },
 
